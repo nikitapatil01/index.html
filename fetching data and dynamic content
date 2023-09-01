@@ -1,0 +1,30 @@
+const url = "https://randomuser.me/api/";
+
+const fetchUsers = async () => {
+  const response = await fetch(url);
+  const data = await response.json();
+
+  const users = data.results;
+
+  for (const user of users) {
+    const profilePicture = user.picture.large;
+    const username = user.login.username;
+    const fullName = user.name.formatted;
+    const gender = user.gender;
+    const dateOfBirth = user.dob.date;
+    const address = user.location.street.name + ", " + user.location.city;
+    const email = user.email;
+
+    console.log(`
+      Profile picture: ${profilePicture}
+      Username: ${username}
+      Full name: ${fullName}
+      Gender: ${gender}
+      Date of birth: ${dateOfBirth}
+      Address: ${address}
+      Email: ${email}
+    `);
+  }
+};
+
+fetchUsers();
