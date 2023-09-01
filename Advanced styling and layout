@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Card with Transition</title>
+    <style>
+        /* User card styling */
+        .user-card {
+            width: 300px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease; /* Transition effect for color change */
+            margin: 20px auto;
+            font-family: Arial, sans-serif;
+        }
+
+        .user-card:hover {
+            background-color: #f7f7f9; /* Color change on hover */
+        }
+
+        .profile-picture {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .user-details {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- User Card Container -->
+    <div class="user-card">
+        <img class="profile-picture" id="profilePicture" src="" alt="User Profile Picture">
+        <div class="user-details">
+            <h3 id="fullName"></h3>
+            <p><strong>Username:</strong> <span id="username"></span></p>
+            <p><strong>Gender:</strong> <span id="gender"></span></p>
+            <p><strong>Date of Birth:</strong> <span id="dateOfBirth"></span></p>
+            <p><strong>Address:</strong> <span id="address"></span></p>
+            <p><strong>Email:</strong> <span id="emailAddress"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Fetch user details
+        fetch('https://randomuser.me/api/')
+            .then(response => response.json())
+            .then(data => {
+                const user = data.results[0];
+                document.getElementById('profilePicture').src = user.picture.large;
+                document.getElementById('username').textContent = user.login.username;
+                document.getElementById('fullName').textContent = `${user.name.title} ${user.name.first} ${user.name.last}`;
+                document.getElementById('gender').textContent = user.gender;
+                document.getElementById('dateOfBirth').textContent = new Date(user.dob.date).toLocaleDateString();
+                document.getElementById('address').textContent = `${user.location.street.number} ${user.location.street.name}, ${user.location.city}, ${user.location.state}`;
+                document.getElementById('emailAddress').textContent = user.email;
+            });
+    </script>
+</body>
+
+</html>
